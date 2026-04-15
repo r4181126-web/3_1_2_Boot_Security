@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Create user</title>
+</head>
+<body>
+<h1>Создание нового пользователя</h1>
+
+<form action="#" th:action="@{/users/add}" th:object="${user}" method="post">
+
+    <label for="name">First name</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Имя">
+    <br>
+
+    <label for="surName">Last name</label>
+    <input type="text" th:field="*{surName}" id="surName" placeholder="Фамилия">
+    <br>
+
+    <label for="department">Department</label>
+    <input type="text" th:field="*{department}" id="department" placeholder="Работа">
+    <br>
+
+    <label for="salary">Salary</label>
+    <input type="number" th:field="*{salary}" id="salary" placeholder="Зарплата">
+    <br>
+
+    <label for="password">Пароль:</label>
+    <input type="password" th:field="*{password}" id="password" required>
+    <br><br>
+
+    <input type="submit" value="Добавить пользователя">
+</form>
+
+<br>
+<a th:href="@{/users}">Назад к списку</a>
+</body>
+</html>
