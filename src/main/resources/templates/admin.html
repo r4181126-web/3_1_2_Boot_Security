@@ -37,7 +37,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="u : ${users}">
+    <tr th:each="u : ${admin}">
         <td th:text="${u.id}">1</td>
         <td th:text="${u.username}">user</td>
         <td th:text="${u.name}">Name</td>
@@ -47,9 +47,9 @@
         <td th:text="${u.roles}">ROLE_USER</td>
 
         <td>
-            <a th:href="@{/users/edit/{id}(id=${u.id})}">Edit</a>
+            <a th:href="@{/admin/edit/{id}(id=${u.id})}">Edit</a>
             &nbsp;|&nbsp;
-            <form th:action="@{/users/delete}" method="post" style="display:inline">
+            <form th:action="@{/admin/delete}" method="post" style="display:inline">
                 <input type="hidden" name="id" th:value="${u.id}">
                 <button type="submit" style="background:none; border:none; color:blue; cursor:pointer; text-decoration:underline; display:inline;">
                     Delete
@@ -61,7 +61,7 @@
 </table>
 
 <br>
-<a th:href="@{/users/new}">Add New User</a>
+<a th:href="@{/admin/new}">Add New User</a>
 <br><br>
 
 <form th:action="@{/logout}" method="post">

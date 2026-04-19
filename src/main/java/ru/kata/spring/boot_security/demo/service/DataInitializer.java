@@ -6,32 +6,30 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.Users;
-import ru.kata.spring.boot_security.demo.dao.RoleDao;
-import ru.kata.spring.boot_security.demo.dao.UserDao;
 
 import java.util.Set;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
     @Autowired
-    private UserDao userDao;
+    private UserService userService;
     @Autowired
-    private RoleDao roleDao;
+    private RoleService roleService;
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Override
     public void run(String... args) throws Exception {
-        Role adminRole = roleDao.findByName("ROLE_ADMIN");
+        Role adminRole = roleService.findByName("ROLE_ADMIN");
         if (adminRole == null) {
             adminRole = new Role("ROLE_ADMIN");
-            roleDao.saveRole(adminRole);
+            roleService.saveRole(adminRole);
         }
-        Role userRole = roleDao.findByName("ROLE_USER");
+        Role userRole = roleService.findByName("ROLE_USER");
         if (userRole == null) {
             userRole = new Role("ROLE_USER");
-            roleDao.saveRole(userRole);
+            roleService.saveRole(userRole);
         }
-        if (userDao.findByUsername("andrey") == null) {
+        if (userService.findByUsername("andrey") == null) {
             Users andrey = new Users();
             andrey.setUsername("andrey");
             andrey.setPassword(passwordEncoder.encode("100"));
@@ -40,10 +38,10 @@ public class DataInitializer implements CommandLineRunner {
             andrey.setDepartment("СНГ");
             andrey.setSalary(150000);
             andrey.setRoles(Set.of(adminRole, userRole));
-            userDao.saveUser(andrey);
+            userService.saveUser(andrey);
             System.out.println("Пользователь andrey создан");
         }
-        if (userDao.findByUsername("vika") == null) {
+        if (userService.findByUsername("vika") == null) {
             Users vika = new Users();
             vika.setUsername("vika");
             vika.setPassword(passwordEncoder.encode("100"));
@@ -52,7 +50,7 @@ public class DataInitializer implements CommandLineRunner {
             vika.setDepartment("Dree");
             vika.setSalary(0);
             vika.setRoles(Set.of(userRole));
-            userDao.saveUser(vika);
+            userService.saveUser(vika);
             System.out.println("Пользователь vika создан");
         }
     }

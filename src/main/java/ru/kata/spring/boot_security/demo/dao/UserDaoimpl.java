@@ -32,7 +32,7 @@ public class UserDaoimpl implements UserDao {
 
     @Override
     public List<Users> getAllUsers() {
-        return entityManager.createQuery("SELECT u FROM Users u ORDER BY u.id", Users.class).getResultList();
+        return entityManager.createQuery("SELECT u FROM Users u JOIN FETCH u.roles", Users.class).getResultList();
     }
 
     @Override
@@ -56,11 +56,11 @@ public class UserDaoimpl implements UserDao {
     @Override
     public Users findByUsername(String username) {
         try {
-            return entityManager.createQuery("SELECT u FROM Users u WHERE u.username = :username", Users.class)
-                    .setParameter("username", username).getSingleResult();
+            return entityManager.createQuery(
+                            "SELECT u FROM Users u JOIN FETCH u.roles WHERE u.username = :username",
+                            Users.class).setParameter("username", username).getSingleResult();
         } catch (javax.persistence.NoResultException e) {
             return null;
         }
     }
-
 }
